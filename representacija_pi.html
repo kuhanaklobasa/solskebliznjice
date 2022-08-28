@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PI</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</head>
+<body onload="onload_krog()">
+    <style>
+        html {
+            height: 120%;
+        }
+        .jedro {
+            width: 60vw;
+            display: grid;
+            place-items: center;
+            align-content: center;
+            position: absolute; 
+            text-align: left;
+            left: 50%;
+            transform: translate(-50%);
+        }
+        .jedro h1 {
+            width: max-content;
+            margin-bottom: 40px;
+            display: flex;
+        }
+        .jedro h3 {
+            font-size: 23px;
+        }
+        .formula {
+            width: 40px !important;
+            height: 40px !important;
+        }
+        
+        fraction {
+        display: inline-grid;
+        
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        text-align: center;
+        font-size: 0.8em;
+        vertical-align: top;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-bottom: 20px;
+        }
+    
+        numer {
+        width: 106%;
+        border-bottom: 2px solid;
+        
+        }
+        .kalkulator p {
+            font-size: 20px;
+            text-align: center;
+        }
+        .kalkulator {
+            min-width: 50vw;
+            padding: 10px;
+            margin-top: 30px;
+        }
+        .kalkulator .procenti {
+            margin: 10px;
+        }
+        .kalkulator .vse-tocke {
+            margin: 10px;
+        }
+        .nav-link {
+                color: rgb(1, 126, 171)
+            }
+        .rezultat {
+            margin-top: 1em;
+        }
+        .vnosi {
+            align-items: center;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .formule {
+            width: 60vw;
+            margin-top: 30px;
+        }
+        .formule .col {
+            min-width: 200px !important;
+        }
+        .formule p {
+                height: 62px;
+                text-align: center;
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+        .formule h3 {
+            text-align: center;
+        }
+        .slika-razlaga {
+            position: relative;
+            left: 50%;
+            transform: translate(-50%);
+        }
+    </style>
+        <nav class="navbar navbar-expand-sm bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="index.html">
+                Solskebliznjice
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav float-left">
+                  <li class="nav-item">
+                    <a class="nav-link" href="kalkulator_tock.html">kalkulator točk</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="zakljucna_ocena.html">kalkulator zaključne ocene</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="kalkulator_kroga.html">kalkulator kroga</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="representacija_pi.html">Kako izračunamo pi</a>
+                  </li>
+                </ul>
+              </div>
+          </nav>
+    <div class="jedro">
+        <h1>Prikaz kalkuliranja števila pi</h1>
+    <div class="kalkulator border" id="kalkulator">
+        <canvas class="platno" id="platno" width="512" height="512"></canvas>
+        <div class="col">
+        <h3>Ploščina kroga: 142,581313</h3>
+        <h3 class="obseg" id="obseg">Ploščina mnogokotnika: </h3>
+        <h3 class="priblizek" id="priblizek">Približek pi: </h3>
+        </div>
+        <div class="col">
+        <label for="range">Dodajte ploskve (100)</label>
+        <input type="range" min="0" max="100" value="1" class="slider" id="stranic">
+        <label for="range">Dodajte več ploskev (100,000)</label>
+        <input type="range" min="0" max="100000" value="0" class="slider" id="stranic_vec">
+        </div>
+    </div>
+    <div class="razlaga">
+        <h2>Kaj se zgodi?</h2>
+        <p>Več plosk ko dodamo mnogokotniku, bolj natančen obseg in približek stevila &#960 dobimo.<br>
+            Tako deluje Arhimedova metoda za izračunanje števila pi.
+        </p>
+        <img class="slika-razlaga" src="https://images.saymedia-content.com/.image/c_limit%2Ccs_srgb%2Cq_auto:eco%2Cw_386/MTc0NjQ3NTc2Mzk2NTcyNDMx/how-to-find-pi-using-regular-polygons.webp" alt="" width="256" height="256">
+        <p>Če narišemo dva kvadrata okoli kroga in izračunamo njuno ploščino dobimo najbolj grob približek števila pi. <br> <br>
+        Večji štirikotnik izračunamo pa standarni formuli p=a x a. Vemo da je eni stranica dolga 2r potem-takem je ploščina 4. <br> <br>
+        Manjši štirikotnik je bolj zapleten saj ima diagonalo 2 namesto stranice. V tem primeru uporabimo pitagorov izrek: Vsota površin kvadratov katet pravokotnega trikotnika je enaka površini kvadrata nad hipotenuzo.
+    Po formuli C&#178 = a&#178 + b&#178 = 2&#178 = x&#178 + x&#178 kjer je x dolžina enega roba kvadrata. To lahko rešimo da dobimo x = √2, torej je ploščina malega kvadrata 2. <br> <br>
+    Zdaj vemo da 2 &#60 &#960 &#60 4. Tako lahko nadaljujemo z mnogokotniki v neskončnost in dobimo &#960</p>
+    </div>
+    </div>
+    <script>
+        function onload_krog() {
+            console.log("test")
+            const canvas = document.getElementById('platno')
+            const ctx = platno.getContext('2d')
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const X = canvas.width / 2;
+            const Y = canvas.height / 2;
+            var R = canvas.width / 2;
+            ctx.beginPath();
+            ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = '#FF0000';
+            ctx.stroke();
+        }
+    </script>
+    <script>
+        const stranic1 = document.getElementById('stranic')
+        const stranic2 = document.getElementById('stranic_vec')
+        function kalkuliraj(vec, evt) {
+            const canvas = document.getElementById('platno')
+            const ctx = platno.getContext('2d')
+            console.log(vec)
+            if (!vec) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const X = canvas.width / 2;
+            const Y = canvas.height / 2;
+            var R = canvas.width / 2;
+            ctx.beginPath();
+            ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = '#FF0000';
+            ctx.stroke();
+            }
+            if (!vec) {
+                stranic2.value = 0
+            }
+            const stranic =  (parseInt(document.getElementById('stranic').value)) + (parseInt(document.getElementById('stranic_vec').value))
+        
+            const alfa = Math.PI / stranic
+            const velik_pi = stranic * Math.tan(alfa)
+            const mali_pi = stranic * Math.sin(alfa)
+            const približek = (velik_pi + mali_pi) / 2
+            const obseg = document.getElementById('obseg')
+            const priblizek = document.getElementById('priblizek')
+            var numberOfSides = stranic,
+            size = canvas.width / 2,
+            Xcenter = canvas.width / 2,
+            Ycenter = canvas.height / 2;
+            //const velikost_stranice_mnogokotnika = ((size / 37) * Math.tan((2*Math.PI) / numberOfSides))
+            //const ploscina_mnogokotnika = (1/4)*numberOfSides*velikost_stranice_mnogokotnika**2 * (1 / Math.tan(Math.PI/ numberOfSides))
+            ploscina_mnogokotnika =  Math.cos(Math.PI/numberOfSides) * (size / 38) * Math.sin(Math.PI/numberOfSides)  * (size / 38) * numberOfSides
+            console.log(numberOfSides)
+            obseg.innerText = "Ploščina mnogokotnika: " + ploscina_mnogokotnika //ploscina_hexogon
+            priblizek.innerText = "Približek pi: " + približek
+            
+            if (!vec) {
+            ctx.lineWidth = 2
+            ctx.beginPath();
+            ctx.moveTo (Xcenter +  size * Math.cos(0), Ycenter +  size *  Math.sin(0));          
+
+            for (var i = 1; i <= numberOfSides;i += 1) {
+            ctx.lineTo (Xcenter + size * Math.cos(i * 2 * Math.PI / numberOfSides), Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides));
+            }
+            
+            ctx.strokeStyle = "#000000";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            }
+        };
+        stranic1.addEventListener('input', (evt) => kalkuliraj(false, evt), false)
+        stranic2.addEventListener('input', (evt) => kalkuliraj(true, evt), false)
+    </script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js";
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDa6gYltAshV0Le7Ky5JjNmyipxI9l-azc",
+    authDomain: "solskebliznjice.firebaseapp.com",
+    projectId: "solskebliznjice",
+    storageBucket: "solskebliznjice.appspot.com",
+    messagingSenderId: "141610717074",
+    appId: "1:141610717074:web:973d8fee2aa4cb317d3b4b",
+    measurementId: "G-40TDE02L4B"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-40TDE02L4B"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-40TDE02L4B');
+</script>
+</body>
+</html>
